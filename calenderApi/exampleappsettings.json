@@ -1,0 +1,12 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "calenderApiContext": "Server=.\\SQLEXPRESS; Database=Event; Trusted_Connection=True; Encrypt=false" //db connection string
+  }
+}
