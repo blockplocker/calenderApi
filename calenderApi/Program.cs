@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using calenderApi.Data;
+using calenderApi.Controllers;
 
 namespace calenderApi
 {
@@ -19,6 +20,17 @@ namespace calenderApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>           // -------------- for angular v
+            {
+                options.AddPolicy("AllowAngularDevClient",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:4200") // Angular dev server
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
+                    });
+            });                   // -------------- for angular  /\
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,6 +39,10 @@ namespace calenderApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseHttpsRedirection();
+
+            app.UseCors("AllowAngularDevClient");  // -------------- for angular
 
             app.UseHttpsRedirection();
 

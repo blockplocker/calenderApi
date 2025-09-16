@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using calenderApi.Data;
 using calenderApi.Models;
+using Swashbuckle.AspNetCore.Annotations;
+
 
 namespace calenderApi.Controllers
 {
@@ -18,13 +20,15 @@ namespace calenderApi.Controllers
 
         // GET: /Events
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IEnumerable<Event>))]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
             return await _context.Event.ToListAsync();
         }
 
-        // GET: /Events/5
+        // GET: /Events/
         [HttpGet("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(Event))]
         public async Task<ActionResult<Event>> GetEvent(int id)
         {
             var @event = await _context.Event.FindAsync(id);
@@ -39,6 +43,7 @@ namespace calenderApi.Controllers
 
         // POST: /Events
         [HttpPost]
+        [SwaggerResponse(StatusCodes.Status201Created, Type = typeof(Event))]
         public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
             _context.Event.Add(@event);
@@ -49,6 +54,7 @@ namespace calenderApi.Controllers
 
         // PUT: /Events/5
         [HttpPut("{id}")]
+        [SwaggerResponse(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutEvent(int id, Event @event)
         {
             if (id != @event.Id)
@@ -79,6 +85,7 @@ namespace calenderApi.Controllers
 
         // DELETE: /Events/5
         [HttpDelete("{id}")]
+        [SwaggerResponse(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteEvent(int id)
         {
             var @event = await _context.Event.FindAsync(id);
